@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glasgow — Scotland's Beating Heart</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --white:#ffffff;
+  --black:#0a0a0a;
+  --cream:#f8f5f0;
+  --stone:#e8e3da;
+  --amber:#c9933a;
+  --amber-light:#e8c07a;
+  --glass-bg:rgba(0,0,0,0.38);
+  --glass-border:rgba(255,255,255,0.15);
+  --text-muted:rgba(255,255,255,0.65);
+}
+html{scroll-behavior:smooth}
+body{
+  font-family:'DM Sans',sans-serif;
+  background:var(--black);
+  color:var(--white);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  overflow-x:hidden;
+}
+
+/* ─── LIQUID GLASS ─── */
+.liquid-glass{
+  background:rgba(0,0,0,0.4);
+  background-blend-mode:luminosity;
+  backdrop-filter:blur(4px);
+  -webkit-backdrop-filter:blur(4px);
+  border:none;
+  box-shadow:inset 0 1px 1px rgba(255,255,255,0.1);
+  position:relative;
+  overflow:hidden;
+}
+.liquid-glass::before{
+  content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;
+  background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.1) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.1) 80%,rgba(255,255,255,0.3) 100%);
+  -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
+}
+
+/* ─── NAVBAR ─── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:1.5rem 4rem;
+}
+@media(max-width:768px){nav{padding:1rem 1.5rem}}
+.nav-bar{
+  display:flex;align-items:center;justify-content:space-between;
+  border-radius:14px;padding:.6rem 1.2rem;
+}
+.nav-logo{font-family:'Playfair Display',serif;font-size:1.5rem;font-weight:700;letter-spacing:.05em;color:var(--white)}
+.nav-links{display:flex;gap:2rem}
+@media(max-width:768px){.nav-links{display:none}}
+.nav-links a{font-size:.875rem;color:var(--text-muted);text-decoration:none;transition:color .2s}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{
+  background:var(--white);color:var(--black);border:none;cursor:pointer;
+  padding:.5rem 1.4rem;border-radius:8px;font-size:.875rem;font-weight:500;font-family:'DM Sans',sans-serif;
+  transition:background .2s;
+}
+.nav-cta:hover{background:#e8e8e8}
+
+/* ─── SECTION TABS ─── */
+.page-tabs{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);z-index:100;
+  display:flex;gap:.5rem;
+}
+.tab-btn{
+  background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);cursor:pointer;
+  padding:.45rem 1.1rem;border-radius:100px;font-size:.75rem;font-family:'DM Sans',sans-serif;
+  transition:all .25s;white-space:nowrap;
+}
+.tab-btn:hover,.tab-btn.active{background:var(--white);color:var(--black);border-color:var(--white)}
+@media(max-width:600px){.tab-btn{padding:.35rem .7rem;font-size:.68rem}}
+
+/* ─── PAGES ─── */
+.page{display:none;min-height:100vh}
+.page.active{display:block}
+
+/* ─── PAGE 1: HERO ─── */
+#page-home{position:relative;height:100vh;overflow:hidden}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0}
+.hero-overlay{position:absolute;inset:0;z-index:1;display:flex;flex-direction:column}
+.hero-spacer{flex:1;display:flex;flex-direction:column;justify-content:flex-end;padding:3rem 4rem 7rem}
+@media(max-width:768px){.hero-spacer{padding:2rem 1.5rem 7rem}}
+.hero-grid{display:grid;grid-template-columns:1fr 1fr;gap:2rem;align-items:end}
+@media(max-width:900px){.hero-grid{grid-template-columns:1fr}}
+.hero-heading{
+  font-family:'Playfair Display',serif;
+  font-size:clamp(2.8rem,6vw,5.5rem);
+  font-weight:400;line-height:1.05;
+  letter-spacing:-0.04em;margin-bottom:1rem;
+}
+.hero-sub{font-size:1.05rem;color:var(--text-muted);margin-bottom:1.5rem;line-height:1.6;max-width:480px}
+.hero-btns{display:flex;gap:1rem;flex-wrap:wrap}
+.btn-primary{
+  background:var(--white);color:var(--black);border:none;cursor:pointer;
+  padding:.85rem 2rem;border-radius:10px;font-weight:500;font-size:.9rem;font-family:'DM Sans',sans-serif;
+  transition:background .2s;
+}
+.btn-primary:hover{background:#e8e8e8}
+.btn-outline{
+  background:transparent;border:1px solid rgba(255,255,255,0.2);color:var(--white);cursor:pointer;
+  padding:.85rem 2rem;border-radius:10px;font-weight:500;font-size:.9rem;font-family:'DM Sans',sans-serif;
+  transition:all .2s;
+}
+.btn-outline:hover{background:var(--white);color:var(--black)}
+.hero-tag{display:flex;align-items:flex-end;justify-content:flex-end}
+@media(max-width:900px){.hero-tag{justify-content:flex-start;margin-top:.5rem}}
+.tag-pill{
+  border:1px solid rgba(255,255,255,0.2);padding:.85rem 1.75rem;border-radius:14px;
+}
+.tag-pill p{font-size:1.25rem;font-weight:300;letter-spacing:.02em}
+
+/* ─── FADE IN ANIMATION ─── */
+.fade-in{opacity:0;transition:opacity 1s ease}
+.fade-in.visible{opacity:1}
+[data-char]{display:inline-block;opacity:0;transform:translateX(-18px);transition:opacity .5s,transform .5s}
+[data-char].show{opacity:1;transform:translateX(0)}
+span.space{display:inline-block;width:.3em}
+
+/* ─── PAGE 2: ATTRACTIONS ─── */
+#page-attractions{background:var(--cream);color:var(--black);padding:7rem 4rem 6rem}
+@media(max-width:768px){#page-attractions{padding:7rem 1.5rem 5rem}}
+.section-eyebrow{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);font-weight:500;margin-bottom:.75rem}
+.section-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3.5rem);font-weight:400;line-height:1.1;margin-bottom:1rem;color:var(--black)}
+.section-sub{font-size:1rem;color:#666;max-width:540px;line-height:1.7;margin-bottom:3rem}
+.places-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.place-card{
+  background:var(--white);border-radius:16px;overflow:hidden;
+  border:1px solid var(--stone);transition:transform .25s,box-shadow .25s;cursor:pointer;
+}
+.place-card:hover{transform:translateY(-4px);box-shadow:0 16px 40px rgba(0,0,0,0.1)}
+.place-img-wrap{height:200px;overflow:hidden;position:relative;background:linear-gradient(135deg,#2a2a2a 0%,#3d3d3d 100%)}
+.food-img-wrap{height:190px;overflow:hidden;background:#111;position:relative}
+.place-img-wrap img,.food-img-wrap img{width:100%;height:100%;object-fit:cover}
+.place-img-wrap img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.place-card:hover .place-img-wrap img{transform:scale(1.04)}
+.place-badge{
+  position:absolute;top:.75rem;left:.75rem;
+  background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);
+  color:var(--white);font-size:.72rem;padding:.3rem .75rem;border-radius:100px;
+  border:1px solid rgba(255,255,255,0.2);
+}
+.place-body{padding:1.25rem 1.4rem 1.5rem}
+.place-name{font-family:'Playfair Display',serif;font-size:1.25rem;font-weight:500;margin-bottom:.4rem;color:var(--black)}
+.place-addr{font-size:.8rem;color:#888;margin-bottom:.6rem}
+.place-desc{font-size:.875rem;color:#555;line-height:1.65;margin-bottom:.9rem}
+.place-meta{display:flex;gap:.5rem;align-items:center}
+.rating-badge{
+  background:#fef3e2;color:#b8760a;font-size:.78rem;font-weight:500;
+  padding:.25rem .65rem;border-radius:100px;
+}
+.free-badge{background:#e8f5e8;color:#2d7a2d;font-size:.78rem;font-weight:500;padding:.25rem .65rem;border-radius:100px}
+.hours-note{font-size:.78rem;color:#888}
+
+/* ─── PAGE 3: RESTAURANTS ─── */
+#page-food{background:var(--black);padding:7rem 4rem 6rem}
+@media(max-width:768px){#page-food{padding:7rem 1.5rem 5rem}}
+.food-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem;margin-top:0}
+.food-card{
+  border:1px solid rgba(255,255,255,0.08);border-radius:16px;
+  overflow:hidden;background:rgba(255,255,255,0.04);transition:all .25s;
+}
+.food-card:hover{background:rgba(255,255,255,0.07);border-color:rgba(255,255,255,0.15);transform:translateY(-3px)}
+
+.food-img-wrap img{width:100%;height:100%;object-fit:cover;opacity:.85;transition:opacity .3s,transform .4s}
+.food-card:hover .food-img-wrap img{opacity:1;transform:scale(1.03)}
+.food-body{padding:1.25rem 1.4rem 1.5rem}
+.food-name{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:500;margin-bottom:.3rem;color:var(--white)}
+.food-type{font-size:.78rem;color:var(--amber);text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.food-addr{font-size:.8rem;color:rgba(255,255,255,.4);margin-bottom:.6rem}
+.food-desc{font-size:.875rem;color:rgba(255,255,255,.6);line-height:1.65;margin-bottom:.9rem}
+.food-rating{font-size:.8rem;color:var(--amber-light);font-weight:500}
+.price-badge{
+  display:inline-block;margin-left:.5rem;
+  background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);
+  font-size:.75rem;padding:.2rem .55rem;border-radius:6px;vertical-align:middle;
+}
+
+/* ─── PAGE 4: MAP ─── */
+#page-map{background:var(--cream);color:var(--black);padding:7rem 4rem 6rem}
+@media(max-width:768px){#page-map{padding:7rem 1.5rem 5rem}}
+.map-wrapper{margin-top:2rem;border-radius:16px;overflow:hidden;border:1px solid var(--stone);height:480px}
+.map-wrapper iframe{width:100%;height:100%;border:none}
+.map-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;margin-top:1.5rem}
+.map-mini{
+  background:var(--white);border:1px solid var(--stone);border-radius:12px;padding:1rem 1.1rem;
+  display:flex;align-items:flex-start;gap:.75rem;
+}
+.map-icon{width:36px;height:36px;border-radius:8px;background:#f0ece6;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.map-label{font-size:.85rem;font-weight:500;color:var(--black);line-height:1.3}
+.map-sublabel{font-size:.75rem;color:#888;margin-top:.2rem}
+
+/* ─── PAGE 5: PLAN ─── */
+#page-plan{background:var(--black);padding:7rem 4rem 6rem}
+@media(max-width:768px){#page-plan{padding:7rem 1.5rem 5rem}}
+.plan-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+@media(max-width:900px){.plan-grid{grid-template-columns:1fr}}
+.plan-section-title{font-family:'Playfair Display',serif;font-size:1.5rem;margin-bottom:1.25rem;color:var(--white)}
+.itinerary-day{margin-bottom:2rem}
+.day-label{font-size:.75rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber);font-weight:500;margin-bottom:.75rem}
+.day-items{display:flex;flex-direction:column;gap:.6rem}
+.day-item{
+  display:flex;gap:.9rem;align-items:flex-start;padding:.85rem 1rem;
+  background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:10px;
+}
+.day-time{font-size:.78rem;color:var(--amber);font-weight:500;min-width:52px;margin-top:.1rem}
+.day-info strong{font-size:.9rem;color:var(--white);font-weight:500;display:block;margin-bottom:.15rem}
+.day-info span{font-size:.8rem;color:rgba(255,255,255,.45)}
+.info-col{display:flex;flex-direction:column;gap:1rem}
+.info-box{
+  border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:1.25rem 1.4rem;
+  background:rgba(255,255,255,.03);
+}
+.info-box-title{font-size:.75rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber);margin-bottom:.85rem;font-weight:500}
+.info-row{display:flex;justify-content:space-between;align-items:center;padding:.5rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.875rem}
+.info-row:last-child{border-bottom:none}
+.info-row span:first-child{color:rgba(255,255,255,.5)}
+.info-row span:last-child{color:var(--white);font-weight:500}
+.tips-list{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+.tips-list li{font-size:.875rem;color:rgba(255,255,255,.6);padding-left:1.2rem;position:relative;line-height:1.5}
+.tips-list li::before{content:'→';position:absolute;left:0;color:var(--amber)}
+.footer-credit{
+  margin-top:4rem;padding-top:1.5rem;border-top:1px solid rgba(255,255,255,.08);
+  text-align:center;font-size:.8rem;color:rgba(255,255,255,.3);
+}
+.footer-credit strong{color:rgba(255,255,255,.5)}
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+  <div class="nav-bar liquid-glass">
+    <span class="nav-logo">GLASGOW</span>
+    <div class="nav-links">
+      <a href="#" onclick="showPage('home')">Home</a>
+      <a href="#" onclick="showPage('attractions')">Attractions</a>
+      <a href="#" onclick="showPage('food')">Dining</a>
+      <a href="#" onclick="showPage('map')">Map</a>
+      <a href="#" onclick="showPage('plan')">Plan</a>
+    </div>
+    <button class="nav-cta" onclick="showPage('plan')">Plan My Trip</button>
+  </div>
+</nav>
+
+<!-- PAGE TABS -->
+<div class="page-tabs">
+  <button class="tab-btn active" onclick="showPage('home')" data-page="home">Home</button>
+  <button class="tab-btn" onclick="showPage('attractions')" data-page="attractions">Sights</button>
+  <button class="tab-btn" onclick="showPage('food')" data-page="food">Dining</button>
+  <button class="tab-btn" onclick="showPage('map')" data-page="map">Map</button>
+  <button class="tab-btn" onclick="showPage('plan')" data-page="plan">Plan</button>
+</div>
+
+<!-- ── PAGE 1: HOME ── -->
+<section class="page active" id="page-home">
+  <video class="hero-video" autoplay loop muted playsinline
+    src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4">
+  </video>
+  <div class="hero-overlay">
+    <div style="flex:1"></div>
+    <div class="hero-spacer" style="flex:unset">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-heading" id="hero-heading">Shaping Glasgow<br>with soul and stone.</h1>
+          <p class="hero-sub fade-in" id="hero-sub">Scotland's most vibrant city — where Gothic architecture meets world-class museums, legendary hospitality, and a spirit that never sleeps.</p>
+          <div class="hero-btns fade-in" id="hero-btns">
+            <button class="btn-primary" onclick="showPage('attractions')">Explore Now</button>
+            <button class="btn-outline" onclick="showPage('plan')">Plan My Trip</button>
+          </div>
+        </div>
+        <div class="hero-tag">
+          <div class="tag-pill liquid-glass fade-in" id="hero-tag">
+            <p>Explore. Eat. Experience.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PAGE 2: ATTRACTIONS ── -->
+<section class="page" id="page-attractions">
+  <p class="section-eyebrow">Things To Do</p>
+  <h2 class="section-title">Glasgow's Finest Sights</h2>
+  <p class="section-sub">From medieval cathedrals to award-winning free museums — Glasgow packs more culture per square mile than almost anywhere in Britain.</p>
+  <div class="places-grid">
+
+    <div class="place-card">
+      <div class="place-img-wrap">
+        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=700&auto=format&fit=crop" alt="Kelvingrove Art Gallery" loading="lazy" onerror="this.src='https://picsum.photos/seed/kelvingrove/700/400'">
+        <span class="place-badge">Art & Culture</span>
+      </div>
+      <div class="place-body">
+        <p class="place-name">Kelvingrove Art Gallery & Museum</p>
+        <p class="place-addr">📍 Argyle St, Glasgow G3 8AG</p>
+        <p class="place-desc">One of Scotland's most-visited museums with a stunning Spanish Baroque building, Spitfire aircraft, and a daily 1pm organ recital you won't forget.</p>
+        <div class="place-meta">
+          <span class="rating-badge">★ 4.7 · 24,827 reviews</span>
+          <span class="free-badge">Free Entry</span>
+        </div>
+        <p class="hours-note" style="margin-top:.5rem">Mon–Thu & Sat: 10am–5pm · Fri & Sun: 11am–5pm</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-img-wrap">
+        <img src="https://images.unsplash.com/photo-1566438480900-0609be27a4be?w=700&auto=format&fit=crop" alt="Riverside Museum" loading="lazy" onerror="this.src='https://picsum.photos/seed/riverside/700/400'">
+        <span class="place-badge">Transport Museum</span>
+      </div>
+      <div class="place-body">
+        <p class="place-name">Riverside Museum</p>
+        <p class="place-addr">📍 100 Pointhouse Rd, Glasgow G3 8RS</p>
+        <p class="place-desc">Zaha Hadid's striking building houses Glasgow's transport history — from vintage trams and steam engines to a rare DeLorean from Back to the Future.</p>
+        <div class="place-meta">
+          <span class="rating-badge">★ 4.7 · 20,632 reviews</span>
+          <span class="free-badge">Free Entry</span>
+        </div>
+        <p class="hours-note" style="margin-top:.5rem">Mon–Thu & Sat: 10am–5pm · Fri & Sun: 11am–5pm</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-img-wrap">
+        <img src="https://images.unsplash.com/photo-1548013146-72479768bada?w=700&auto=format&fit=crop" alt="Glasgow Cathedral" loading="lazy" onerror="this.src='https://picsum.photos/seed/cathedral/700/400'">
+        <span class="place-badge">Heritage</span>
+      </div>
+      <div class="place-body">
+        <p class="place-name">Glasgow Cathedral</p>
+        <p class="place-addr">📍 Castle St, Glasgow G4 0QZ</p>
+        <p class="place-desc">The oldest building in Glasgow and one of the finest examples of Gothic architecture in Scotland — built in the 1100s and still standing in magnificent form.</p>
+        <div class="place-meta">
+          <span class="rating-badge">★ 4.6 · 9,732 reviews</span>
+          <span class="free-badge">Free Entry</span>
+        </div>
+        <p class="hours-note" style="margin-top:.5rem">Mon–Sat: 9:30am–4:15pm · Sun: 1pm–4:15pm</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-img-wrap">
+        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=700&auto=format&fit=crop" alt="Kelvingrove Park" loading="lazy" onerror="this.src='https://picsum.photos/seed/park/700/400'">
+        <span class="place-badge">Park & Nature</span>
+      </div>
+      <div class="place-body">
+        <p class="place-name">Kelvingrove Park</p>
+        <p class="place-addr">📍 Park Terrace, Glasgow G3 6BY</p>
+        <p class="place-desc">85 acres of Victorian parkland in Glasgow's West End, with the River Kelvin winding through and views of the University of Glasgow's gothic spires. Open 24 hours.</p>
+        <div class="place-meta">
+          <span class="rating-badge">★ 4.7 · 14,032 reviews</span>
+          <span class="free-badge">Free</span>
+        </div>
+        <p class="hours-note" style="margin-top:.5rem">Open 24 hours, every day</p>
+      </div>
+    </div>
+
+    <div class="place-card">
+      <div class="place-img-wrap">
+        <img src="https://images.unsplash.com/photo-1519681393784-d120267933ba?w=700&auto=format&fit=crop" alt="Glasgow Green" loading="lazy" onerror="this.src='https://picsum.photos/seed/green/700/400'">
+        <span class="place-badge">Historic Park</span>
+      </div>
+      <div class="place-body">
+        <p class="place-name">Glasgow Green</p>
+        <p class="place-addr">📍 Greendyke St, Glasgow G1 5DB</p>
+        <p class="place-desc">Glasgow's oldest public park, home to the magnificent People's Palace social history museum and the ornate Doulton Fountain — a local icon since 1888.</p>
+        <div class="place-meta">
+          <span class="rating-badge">★ 4.6 · 11,750 reviews</span>
+          <span class="free-badge">Free</span>
+        </div>
+        <p class="hours-note" style="margin-top:.5rem">Open 24 hours, every day</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PAGE 3: FOOD ── -->
+<section class="page" id="page-food">
+  <p class="section-eyebrow" style="color:var(--amber)">Where To Eat</p>
+  <h2 class="section-title" style="color:var(--white)">Glasgow's Best Tables</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.55)">Glasgow punches well above its weight in food. From historic Victorian dining rooms to modern Scottish kitchens — these are the real standouts.</p>
+  <div class="food-grid">
+
+    <div class="food-card">
+      <div class="food-img-wrap">
+        <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=700&auto=format&fit=crop" alt="Margo restaurant" loading="lazy" onerror="this.src='https://picsum.photos/seed/margo/700/400'">
+      </div>
+      <div class="food-body">
+        <p class="food-type">Modern Scottish</p>
+        <p class="food-name">Margo</p>
+        <p class="food-addr">📍 68 Miller St, Glasgow G1 1DT</p>
+        <p class="food-desc">Exquisite small plates in an elegant city-centre setting. The iberian ham, grilled squid, and pork belly are exceptional. Chef's table available for the full experience.</p>
+        <div><span class="food-rating">★ 4.8 · 483 reviews</span><span class="price-badge">££–£££</span></div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:.5rem">Mon–Sun: 12pm–10pm</p>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <div class="food-img-wrap">
+        <img src="https://images.unsplash.com/photo-1424847651672-bf20a4b0982b?w=700&auto=format&fit=crop" alt="The Buttery restaurant" loading="lazy" onerror="this.src='https://picsum.photos/seed/buttery/700/400'">
+      </div>
+      <div class="food-body">
+        <p class="food-type">Classic British · Seafood</p>
+        <p class="food-name">The Buttery</p>
+        <p class="food-addr">📍 652 Argyle St, Glasgow G3 8UF</p>
+        <p class="food-desc">Glasgow's most beloved institution — a Victorian gem with antique cutlery, cosy private snugs, and legendary scallops. Understated from outside, extraordinary within.</p>
+        <div><span class="food-rating">★ 4.8 · 2,026 reviews</span><span class="price-badge">££</span></div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:.5rem">Tue–Sun: 12pm–9pm · Closed Mon</p>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <div class="food-img-wrap">
+        <img src="https://images.unsplash.com/photo-1552566626-52f8b828add9?w=700&auto=format&fit=crop" alt="The Ivy Glasgow" loading="lazy" onerror="this.src='https://picsum.photos/seed/ivy/700/400'">
+      </div>
+      <div class="food-body">
+        <p class="food-type">British Brasserie</p>
+        <p class="food-name">The Ivy Buchanan Street</p>
+        <p class="food-addr">📍 106 Buchanan St, Glasgow G1 2NB</p>
+        <p class="food-desc">Opulent décor on Glasgow's premier shopping street. Ideal for a leisurely brunch or a night out. Statement lighting, rich colour palettes, and menu that rarely misses.</p>
+        <div><span class="food-rating">★ 4.5 · 2,980 reviews</span><span class="price-badge">£££</span></div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:.5rem">Mon–Thu & Sun: 8:30am–11:30pm · Fri–Sat: until midnight</p>
+      </div>
+    </div>
+
+    <div class="food-card">
+      <div class="food-img-wrap">
+        <img src="https://images.unsplash.com/photo-1572116469696-31de0f17cc34?w=700&auto=format&fit=crop" alt="The Spiritualist cocktail bar" loading="lazy" onerror="this.src='https://picsum.photos/seed/spirits/700/400'">
+      </div>
+      <div class="food-body">
+        <p class="food-type">Cocktail Bar & Dining</p>
+        <p class="food-name">The Spiritualist Glasgow</p>
+        <p class="food-addr">📍 62 Miller St, Glasgow G1 1DT</p>
+        <p class="food-desc">Stunning cocktail bar and restaurant with a vibrant atmosphere, outstanding steak frites, and karaage chicken that people rave about. Great spot for groups.</p>
+        <div><span class="food-rating">★ 4.4 · 1,405 reviews</span><span class="price-badge">£££</span></div>
+        <p style="font-size:.78rem;color:rgba(255,255,255,.35);margin-top:.5rem">Mon–Thu & Sun: 12pm–12am · Fri–Sat: 12pm–1am</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── PAGE 4: MAP ── -->
+<section class="page" id="page-map">
+  <p class="section-eyebrow">Navigate Glasgow</p>
+  <h2 class="section-title">Explore the City</h2>
+  <p class="section-sub">All the key spots in one view. Glasgow's attractions are concentrated in the West End and City Centre — most within easy walking distance of each other.</p>
+  <div class="map-wrapper">
+    <iframe
+      src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d42776.42!2d-4.28!3d55.86!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x488846a462ef6a79%3A0x46f4a0e13f4c7d0!2sGlasgow%2C+UK!5e0!3m2!1sen!2sng!4v1680000000000!5m2!1sen!2sng"
+      allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
+  </div>
+  <div class="map-cards">
+    <div class="map-mini">
+      <div class="map-icon">🏛</div>
+      <div><p class="map-label">Kelvingrove Museum</p><p class="map-sublabel">Argyle St · West End</p></div>
+    </div>
+    <div class="map-mini">
+      <div class="map-icon">⛪</div>
+      <div><p class="map-label">Glasgow Cathedral</p><p class="map-sublabel">Castle St · City Centre</p></div>
+    </div>
+    <div class="map-mini">
+      <div class="map-icon">🚗</div>
+      <div><p class="map-label">Riverside Museum</p><p class="map-sublabel">Pointhouse Rd · Clyde</p></div>
+    </div>
+    <div class="map-mini">
+      <div class="map-icon">🌿</div>
+      <div><p class="map-label">Kelvingrove Park</p><p class="map-sublabel">Park Terrace · West End</p></div>
+    </div>
+    <div class="map-mini">
+      <div class="map-icon">🍽</div>
+      <div><p class="map-label">Margo & The Buttery</p><p class="map-sublabel">Miller St + Argyle St</p></div>
+    </div>
+    <div class="map-mini">
+      <div class="map-icon">🛍</div>
+      <div><p class="map-label">Buchanan Street</p><p class="map-sublabel">City Centre · Shopping</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── PAGE 5: PLAN ── -->
+<section class="page" id="page-plan">
+  <p class="section-eyebrow">Trip Planning</p>
+  <h2 class="section-title" style="color:var(--white)">Your Glasgow Itinerary</h2>
+  <p class="section-sub" style="color:rgba(255,255,255,.5)">A curated 2-day guide through the best of Glasgow — all based on real places, real hours, and honest local tips.</p>
+
+  <div class="plan-grid">
+    <div>
+      <div class="itinerary-day">
+        <p class="day-label">Day 1 — Culture Trail</p>
+        <div class="day-items">
+          <div class="day-item">
+            <span class="day-time">10:00</span>
+            <div class="day-info"><strong>Kelvingrove Art Gallery & Museum</strong><span>Arrive at opening — best before crowds. Don't miss the Spitfire & 1pm organ recital.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">13:00</span>
+            <div class="day-info"><strong>Lunch @ The Buttery</strong><span>652 Argyle St — scallops and Cullen Skink. Book ahead.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">15:00</span>
+            <div class="day-info"><strong>Kelvingrove Park Walk</strong><span>Stroll along the River Kelvin, enjoy views of Glasgow University spires.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">18:30</span>
+            <div class="day-info"><strong>Dinner @ Margo</strong><span>68 Miller St — book the chef's table for a special occasion.</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="itinerary-day">
+        <p class="day-label">Day 2 — Heritage & Waterfront</p>
+        <div class="day-items">
+          <div class="day-item">
+            <span class="day-time">09:30</span>
+            <div class="day-info"><strong>Glasgow Cathedral</strong><span>Castle St — arrive early for a peaceful Gothic experience. Free entry.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">11:30</span>
+            <div class="day-info"><strong>Glasgow Green & People's Palace</strong><span>Historic park + free museum of Glasgow social history.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">13:30</span>
+            <div class="day-info"><strong>Riverside Museum</strong><span>Zaha Hadid's masterpiece — DeLorean, trams, boats. Takes 2 hours.</span></div>
+          </div>
+          <div class="day-item">
+            <span class="day-time">19:00</span>
+            <div class="day-info"><strong>Drinks @ The Spiritualist</strong><span>62 Miller St — cocktails, steak frites, great vibe to close the trip.</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="info-col">
+      <div class="info-box">
+        <p class="info-box-title">Essential Info</p>
+        <div class="info-row"><span>Getting There</span><span>Glasgow Airport · 8mi west</span></div>
+        <div class="info-row"><span>Best Time</span><span>May – September</span></div>
+        <div class="info-row"><span>Currency</span><span>British Pound (£)</span></div>
+        <div class="info-row"><span>Transport</span><span>SPT Subway + Buses</span></div>
+        <div class="info-row"><span>Climate</span><span>Cool & changeable</span></div>
+        <div class="info-row"><span>Language</span><span>English / Scots</span></div>
+      </div>
+      <div class="info-box">
+        <p class="info-box-title">Local Tips</p>
+        <ul class="tips-list">
+          <li>Kelvingrove, Riverside Museum & Glasgow Cathedral are all free — budget for food instead.</li>
+          <li>Book Margo and The Buttery at least a week in advance — they fill fast.</li>
+          <li>The SPT Subway (the "Clockwork Orange") runs a loop — perfect for West End to City Centre hops.</li>
+          <li>Glaswegians are famously friendly — don't hesitate to ask locals for recommendations.</li>
+          <li>Bring a waterproof layer regardless of season. The weather changes fast.</li>
+          <li>Buchanan Street is fully pedestrianised — great for an evening stroll and people-watching.</li>
+        </ul>
+      </div>
+      <div class="info-box">
+        <p class="info-box-title">Where To Stay</p>
+        <div class="info-row"><span>Budget</span><span>Premier Inn City Centre</span></div>
+        <div class="info-row"><span>Mid-range</span><span>Hilton Garden Inn, Finnieston</span></div>
+        <div class="info-row"><span>Tip</span><span>Finnieston area = great location</span></div>
+      </div>
+    </div>
+  </div>
+  <p class="footer-credit">Guide created by <strong>Joseph Rume Bassey</strong> · Glasgow Tourism 2026</p>
+</section>
+
+<script>
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelector('[data-page="'+id+'"]').classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='home') initHero();
+}
+
+function initHero(){
+  const heading = document.getElementById('hero-heading');
+  const lines = heading.innerHTML.split('<br>');
+  heading.innerHTML = '';
+  const charDelay = 30;
+  const initDelay = 200;
+  let totalChars = 0;
+  lines.forEach((line,li)=>{
+    const span = document.createElement('span');
+    span.style.display = 'block';
+    const chars = line.split('');
+    chars.forEach((ch,ci)=>{
+      const s = document.createElement('span');
+      s.setAttribute('data-char','1');
+      s.style.transitionDelay = ((initDelay + (li * chars.length * charDelay) + (ci * charDelay))) + 'ms';
+      if(ch===' '){s.innerHTML='&nbsp;'}else{s.textContent=ch}
+      span.appendChild(s);
+      totalChars++;
+    });
+    heading.appendChild(span);
+    if(li < lines.length-1){
+      const br = document.createElement('br');
+      heading.appendChild(br);
+    }
+  });
+  requestAnimationFrame(()=>{
+    document.querySelectorAll('[data-char]').forEach(c=>c.classList.add('show'));
+  });
+  [
+    {el:'hero-sub',delay:800},
+    {el:'hero-btns',delay:1200},
+    {el:'hero-tag',delay:1400},
+  ].forEach(({el,delay})=>{
+    const node = document.getElementById(el);
+    if(node){
+      node.style.transition = `opacity 1s ease ${delay}ms`;
+      requestAnimationFrame(()=>requestAnimationFrame(()=>node.classList.add('visible')));
+    }
+  });
+}
+initHero();
+
+document.querySelectorAll('img').forEach((img,i)=>{
+  img.addEventListener('error',function(){
+    if(!this.dataset.retried){
+      this.dataset.retried='1';
+      this.src='https://picsum.photos/seed/glasgow'+i+'/700/400';
+    }
+  });
+});
+</script>
+</body>
+</html>
