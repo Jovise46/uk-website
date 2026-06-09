@@ -30,12 +30,16 @@ body{
   overflow-x:hidden;
 }
 
+/* moved inline styles into CSS classes to avoid inline styling */
+.text-white{color:var(--white)}
+.text-muted{color:rgba(255,255,255,.5)}
+
 /* ─── LIQUID GLASS ─── */
 .liquid-glass{
   background:rgba(0,0,0,0.4);
   background-blend-mode:luminosity;
-  backdrop-filter:blur(4px);
   -webkit-backdrop-filter:blur(4px);
+  backdrop-filter:blur(4px);
   border:none;
   box-shadow:inset 0 1px 1px rgba(255,255,255,0.1);
   position:relative;
@@ -45,6 +49,7 @@ body{
   content:'';position:absolute;inset:0;border-radius:inherit;padding:1.4px;
   background:linear-gradient(180deg,rgba(255,255,255,0.3) 0%,rgba(255,255,255,0.1) 20%,rgba(255,255,255,0) 40%,rgba(255,255,255,0) 60%,rgba(255,255,255,0.1) 80%,rgba(255,255,255,0.3) 100%);
   -webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
   -webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none;
 }
 
@@ -76,7 +81,7 @@ nav{
   display:flex;gap:.5rem;
 }
 .tab-btn{
-  background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  background:rgba(0,0,0,0.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);
   border:1px solid rgba(255,255,255,0.15);color:rgba(255,255,255,0.6);cursor:pointer;
   padding:.45rem 1.1rem;border-radius:100px;font-size:.75rem;font-family:'DM Sans',sans-serif;
   transition:all .25s;white-space:nowrap;
@@ -122,6 +127,7 @@ nav{
   border:1px solid rgba(255,255,255,0.2);padding:.85rem 1.75rem;border-radius:14px;
 }
 .tag-pill p{font-size:1.25rem;font-weight:300;letter-spacing:.02em}
+.hero-flex-fill{flex:1}
 
 /* ─── FADE IN ANIMATION ─── */
 .fade-in{opacity:0;transition:opacity 1s ease}
@@ -163,7 +169,7 @@ span.space{display:inline-block;width:.3em}
   padding:.25rem .65rem;border-radius:100px;
 }
 .free-badge{background:#e8f5e8;color:#2d7a2d;font-size:.78rem;font-weight:500;padding:.25rem .65rem;border-radius:100px}
-.hours-note{font-size:.78rem;color:#888}
+.hours-note{font-size:.78rem;color:#888;margin-top:.5rem}
 
 /* ─── PAGE 3: RESTAURANTS ─── */
 #page-food{background:var(--black);padding:7rem 4rem 6rem}
@@ -267,12 +273,12 @@ span.space{display:inline-block;width:.3em}
 
 <!-- ── PAGE 1: HOME ── -->
 <section class="page active" id="page-home">
-  <video class="hero-video" autoplay loop muted playsinline
+  <video class="hero-video" autoplay loop muted
     src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260403_050628_c4e32401-fab4-4a27-b7a8-6e9291cd5959.mp4">
   </video>
   <div class="hero-overlay">
-    <div style="flex:1"></div>
-    <div class="hero-spacer" style="flex:unset">
+    <div class="hero-flex-fill"></div>
+    <div class="hero-spacer">
       <div class="hero-grid">
         <div>
           <h1 class="hero-heading" id="hero-heading">Shaping Glasgow<br>with soul and stone.</h1>
@@ -389,9 +395,9 @@ span.space{display:inline-block;width:.3em}
 
 <!-- ── PAGE 3: FOOD ── -->
 <section class="page" id="page-food">
-  <p class="section-eyebrow" style="color:var(--amber)">Where To Eat</p>
-  <h2 class="section-title" style="color:var(--white)">Glasgow's Best Tables</h2>
-  <p class="section-sub" style="color:rgba(255,255,255,.55)">Glasgow punches well above its weight in food. From historic Victorian dining rooms to modern Scottish kitchens — these are the real standouts.</p>
+  <p class="section-eyebrow">Where To Eat</p>
+  <h2 class="section-title">Glasgow's Best Tables</h2>
+  <p class="section-sub">Glasgow punches well above its weight in food. From historic Victorian dining rooms to modern Scottish kitchens — these are the real standouts.</p>
   <div class="food-grid">
 
     <div class="food-card">
